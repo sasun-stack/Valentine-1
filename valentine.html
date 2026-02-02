@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my Valentine? 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: url('background.png') center center / cover no-repeat;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            z-index: 0;
+        }
+
+        /* Floating hearts background */
+        .hearts-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart-float {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.15;
+            animation: float-up 15s linear infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.15;
+            }
+            50% {
+                opacity: 0.25;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 60px 80px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 500px;
+            position: relative;
+            animation: card-entry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes card-entry {
+            0% {
+                transform: scale(0.8) translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .penguin-container {
+            margin-bottom: 30px;
+            animation: waddle 2s ease-in-out infinite;
+        }
+
+        @keyframes waddle {
+            0%, 100% {
+                transform: rotate(-3deg);
+            }
+            50% {
+                transform: rotate(3deg);
+            }
+        }
+
+        .penguin {
+            width: 140px;
+            height: 160px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        /* Penguin body */
+        .penguin-body {
+            width: 100px;
+            height: 120px;
+            background: #2d3748;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            margin: 0 auto;
+            z-index: 2;
+        }
+
+        /* White belly */
+        .penguin-belly {
+            width: 65px;
+            height: 85px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -45%);
+        }
+
+        /* Head */
+        .penguin-head {
+            width: 80px;
+            height: 75px;
+            background: #2d3748;
+            border-radius: 50% 50% 45% 45%;
+            position: absolute;
+            left: 50%;
+            top: -35px;
+            transform: translateX(-50%);
+            z-index: 3;
+        }
+
+        /* Hair tuft */
+        .penguin-hair {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hair-strand {
+            width: 3px;
+            height: 12px;
+            background: #1a202c;
+            border-radius: 3px;
+            position: absolute;
+            transform-origin: bottom center;
+        }
+
+        .hair-1 {
+            left: -8px;
+            transform: rotate(-25deg);
+        }
+
+        .hair-2 {
+            left: -3px;
+            transform: rotate(-10deg);
+        }
+
+        .hair-3 {
+            left: 3px;
+            transform: rotate(10deg);
+        }
+
+        /* Face white patch */
+        .penguin-face {
+            width: 55px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -40%);
+        }
+
+        /* Eyes */
+        .penguin-eye {
+            width: 30px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            border: 2px solid #2d3748;
+        }
+
+        .penguin-eye-left {
+            left: 8px;
+        }
+
+        .penguin-eye-right {
+            right: 8px;
+        }
+
+        .penguin-pupil {
+            width: 12px;
+            height: 14px;
+            background: #1a202c;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -40%);
+        }
+
+        .penguin-pupil-shine {
+            width: 5px;
+            height: 5px;
+            background: #60a5fa;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+        }
+
+        /* Beak */
+        .penguin-beak {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 12px solid #ff8c42;
+            position: absolute;
+            left: 50%;
+            top: 45px;
+            transform: translateX(-50%);
+        }
+
+        /* Wings */
+        .penguin-wing {
+            width: 35px;
+            height: 70px;
+            background: #2d3748;
+            border-radius: 50% 20% 20% 50%;
+            position: absolute;
+            top: 25px;
+        }
+
+        .penguin-wing-left {
+            left: -15px;
+            transform: rotate(-20deg);
+        }
+
+        .penguin-wing-right {
+            right: -15px;
+            transform: rotate(20deg) scaleX(-1);
+        }
+
+        /* Feet */
+        .penguin-foot {
+            width: 30px;
+            height: 15px;
+            background: #ff8c42;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            bottom: -15px;
+        }
+
+        .penguin-foot-left {
+            left: 15px;
+            transform: rotate(-10deg);
+        }
+
+        .penguin-foot-right {
+            right: 15px;
+            transform: rotate(10deg);
+        }
+
+        .penguin-foot::before,
+        .penguin-foot::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff8c42;
+            border-radius: 50%;
+            bottom: -3px;
+        }
+
+        .penguin-foot::before {
+            left: -5px;
+        }
+
+        .penguin-foot::after {
+            right: -5px;
+        }
+
+        .heart-symbol {
+            position: absolute;
+            top: -5px;
+            right: 15px;
+            font-size: 24px;
+            animation: pulse-heart 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-heart {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #2d3748;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            min-height: 60px;
+        }
+
+        .btn {
+            padding: 16px 48px;
+            border: none;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-family: 'Quicksand', sans-serif;
+            position: relative;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: white;
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.3);
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(255, 20, 147, 0.4);
+        }
+
+        .btn-yes:active {
+            transform: scale(0.95);
+        }
+
+        .btn-no {
+            background: #cbd5e0;
+            color: #4a5568;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            transition: all 0.15s ease-out;
+        }
+
+        .btn-no:hover {
+            background: #a0aec0;
+        }
+
+        .note {
+            color: #718096;
+            font-size: 14px;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .note .emoji {
+            font-style: normal;
+        }
+
+        /* Success state */
+        .success-message {
+            display: none;
+            animation: fade-in 0.8s ease-out;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-message h2 {
+            font-size: 36px;
+            color: #ff1493;
+            margin-bottom: 20px;
+            animation: bounce-text 0.6s ease-out;
+        }
+
+        @keyframes bounce-text {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .success-message p {
+            font-size: 20px;
+            color: #4a5568;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff69b4;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-bg" id="hearts-bg"></div>
+    
+    <div class="container">
+        <div class="card">
+            <div id="question-content">
+                <div class="penguin-container">
+                    <div class="penguin">
+                        <div class="penguin-wing penguin-wing-left"></div>
+                        <div class="penguin-wing penguin-wing-right"></div>
+                        <div class="penguin-body">
+                            <div class="penguin-belly"></div>
+                            <div class="penguin-foot penguin-foot-left"></div>
+                            <div class="penguin-foot penguin-foot-right"></div>
+                        </div>
+                        <div class="penguin-head">
+                            <div class="penguin-hair">
+                                <div class="hair-strand hair-1"></div>
+                                <div class="hair-strand hair-2"></div>
+                                <div class="hair-strand hair-3"></div>
+                            </div>
+                            <div class="penguin-face"></div>
+                            <div class="penguin-eye penguin-eye-left">
+                                <div class="penguin-pupil">
+                                    <div class="penguin-pupil-shine"></div>
+                                </div>
+                            </div>
+                            <div class="penguin-eye penguin-eye-right">
+                                <div class="penguin-pupil">
+                                    <div class="penguin-pupil-shine"></div>
+                                </div>
+                            </div>
+                            <div class="penguin-beak"></div>
+                        </div>
+                        <div class="heart-symbol">💕</div>
+                    </div>
+                </div>
+
+                <h1>jan, will you be my valentine?</h1>
+
+                <div class="buttons">
+                    <button class="btn btn-yes" onclick="sayYes()">Yes</button>
+                    <button class="btn btn-no" id="noBtn" onmouseover="moveButton(event)">No</button>
+                </div>
+
+                <p class="note">*"no" seems a bit shy <span class="emoji">😊</span></p>
+            </div>
+
+            <div id="success-content" class="success-message">
+                <h2>Yay! 💖</h2>
+                <p>I knew you'd say yes! 🎉</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts background
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('hearts-bg');
+            const heartSymbols = ['💕', '💖', '💗', '💓', '💝'];
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-float';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 15 + 's';
+                heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        createFloatingHearts();
+
+        // Move "No" button away from cursor
+        function moveButton(e) {
+            const btn = document.getElementById('noBtn');
+            const card = btn.closest('.card');
+            const cardRect = card.getBoundingClientRect();
+            const btnRect = btn.getBoundingClientRect();
+            
+            // Get mouse position relative to card
+            const mouseX = e.clientX - cardRect.left;
+            const mouseY = e.clientY - cardRect.top;
+            
+            // Calculate available space
+            const maxX = cardRect.width - btnRect.width - 40;
+            const maxY = 300; // Vertical range within buttons area
+            const minY = 200;
+            
+            // Generate random position away from mouse
+            let newX, newY;
+            const attempts = 10;
+            
+            for (let i = 0; i < attempts; i++) {
+                newX = Math.random() * maxX;
+                newY = minY + Math.random() * (maxY - minY);
+                
+                // Check if position is far enough from mouse
+                const distance = Math.sqrt(
+                    Math.pow(newX - mouseX, 2) + 
+                    Math.pow(newY - mouseY, 2)
+                );
+                
+                if (distance > 150) break;
+            }
+            
+            btn.style.left = newX + 'px';
+            btn.style.top = newY + 'px';
+        }
+
+        // Handle "Yes" button
+        function sayYes() {
+            const questionContent = document.getElementById('question-content');
+            const successContent = document.getElementById('success-content');
+            
+            questionContent.style.display = 'none';
+            successContent.style.display = 'block';
+            
+            // Create confetti
+            createConfetti();
+        }
+
+        function createConfetti() {
+            const colors = ['#ff69b4', '#ff1493', '#ffc0cb', '#ff6b9d', '#c71585'];
+            const card = document.querySelector('.card');
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                card.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+    </script>
+</body>
+</html>
